@@ -15,3 +15,4 @@ SpriteSheetRenderer.addSpriteSheetAnimation(
     "https://res.cloudinary.com/frozenscloud/image/upload/v1538858531/brickhitss.png",
     104, 80, 14, 350
 );
+

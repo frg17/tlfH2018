@@ -10,7 +10,9 @@ var g_ball = {
     radius: 10,
 
     xVel: 6,
-    yVel: 7
+    yVel: 7,
+
+    trail: []
 };
 
 g_ball.update = function (du) {
@@ -49,6 +51,10 @@ g_ball.update = function (du) {
         GameAudio.play("ballhit");
     }
 
+    //Save trail
+    const l = this.trail.unshift({cx: this.cx, cy: this.cy});
+    if (l > 5) this.trail.pop();
+
     // *Actually* update my position 
     // ...using whatever velocity I've ended up with
     //
@@ -64,5 +70,18 @@ g_ball.reset = function () {
 };
 
 g_ball.render = function (ctx) {
+    let rad = this.radius;
+    ctx.save();
+    ctx.fillStyle = "#FFF";
     fillCircle(ctx, this.cx, this.cy, this.radius);
+
+    for(let i = 0; i < 4; i += 1) {
+        rad -= 2;
+        const blot = this.trail[i];
+        if(blot) {
+            fillCircle(ctx, blot.cx, blot.cy, rad);
+        }
+    }
+
+    ctx.restore();
 };
