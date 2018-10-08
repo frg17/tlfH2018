@@ -91,5 +91,6 @@ GameAudio.addClip("ballhit", "https://res.cloudinary.com/frozenscloud/video/uplo
 GameAudio.addClip("paddlehit", "https://res.cloudinary.com/frozenscloud/video/upload/v1538864186/paddlehit.wav");
 GameAudio.addClip("ambientcrickets", "https://res.cloudinary.com/frozenscloud/video/upload/v1538864445/crickets.mp3");
 GameAudio.addClip("glassbreak", "https://res.cloudinary.com/frozenscloud/video/upload/v1539034323/glassbreak.flac");
+GameAudio.addClip("glasshit", "https://res.cloudinary.com/frozenscloud/video/upload/v1539034952/hitglass.wav");
 
 

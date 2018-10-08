@@ -42,6 +42,7 @@ g_ball.update = function (du) {
     const wallCollision = g_wall.collidesWith(nextX, nextY, prevX, prevY, this.radius);
     if(wallCollision) {
         this.calculateVelocityChange(wallCollision);
+        GameAudio.play("glasshit");
     }
 
     var margin = 8; //To try and make ball edge hits more in line with the background border.
