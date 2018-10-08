@@ -16,3 +16,15 @@ SpriteSheetRenderer.addSpriteSheetAnimation(
     104, 80, 14, 350
 );
 
+SpriteSheetRenderer.addSpriteSheetAnimation(
+    "glassbrick",
+    "https://res.cloudinary.com/frozenscloud/image/upload/v1539029379/brick1.png",
+    60, 15, 1, 0
+);
+
+SpriteSheetRenderer.addSpriteSheetAnimation(
+    "glassbrickbreak",
+    "https://res.cloudinary.com/frozenscloud/image/upload/v1539032958/brickhit.png",
+    103, 200, 16, 600
+);
+

@@ -36,20 +36,29 @@ Paddle.prototype.render = function (ctx) {
 
 Paddle.prototype.collidesWith = function (prevX, prevY, 
                                           nextX, nextY, 
-                                          r) {
-    const paddleTop = this.cy - this.halfHeight;
-    const paddleLeft = this.cx - this.halfWidth;
-    const paddleRight = this.cx + this.halfWidth;
+                                          r) 
+{
+    const circle = { x: nextX, y: nextY, r: r };
+    const rect = {
+        x: this.cx - this.halfWidth,
+        y: this.cy - this.halfHeight,
+        w: this.halfWidth * 2,
+        h: this.halfHeight * 2,
+    }
 
-    // Check Y coords
-    if (nextY > paddleTop && prevY <= paddleTop) {
-        // Check X coords
-        if (nextX + r >= paddleLeft &&
-            nextX - r <= paddleRight) {
-            // It's a hit!
-            this.isHit();
-            return true;
-        }
+    if (RectCircleColliding(circle, rect)) {
+        this.isHit();
+
+        const circlePrev = {
+            x: prevX,
+            y: prevY,
+            r
+        };
+        const collisionPoint = findCircleCollisionPointWithRectangle(
+            circlePrev,
+            rect
+        );
+        return collisionPoint;
     }
     // It's a miss!
     return false;
@@ -60,6 +69,7 @@ Paddle.prototype.collidesWith = function (prevX, prevY,
  */
 Paddle.prototype.isHit = function() {
     this.animator.playAnimationOnce("paddlehit", "paddle");
+    GameAudio.play("paddlehit", 0.5);
 }
 
 
@@ -68,4 +78,8 @@ Paddle.prototype.initAnimator = function(animations) {
     this.animator.addAnimation("paddle", animations["paddle"]);
     this.animator.addAnimation("paddlehit", animations["paddlehit"]);
     this.animator.playAnimation("paddle");
+}
+
+Paddle.prototype.init = function(animations) {
+    this.initAnimator(animations);
 }

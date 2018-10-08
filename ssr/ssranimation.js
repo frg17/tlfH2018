@@ -83,6 +83,8 @@ function Animator(ctx) {
 
     this.playOnce = false; //Play current animation once
     this.playOnceNextAnimation = null;  //Next animation to play after one shot animation
+
+    this.isPlaying = false;
 }
 
 
@@ -103,6 +105,7 @@ Animator.prototype.playAnimation = function(animationName) {
     this.currentAnimation = this.animations[animationName];
     this.nextFrame = 0;
     this.frameIntervalStep = 0;
+    this.isPlaying = true;
 }
 
 
@@ -118,6 +121,7 @@ Animator.prototype.playAnimationOnce = function(animationName, nextAnimationName
     this.currentAnimation = this.animations[animationName];
     this.nextFrame = 0;
     this.frameIntervalStep = 0;
+    this.isPlaying = true;
 }
 
 
@@ -134,7 +138,6 @@ Animator.prototype.update = function(dt, cx, cy, angle, scaleX, scaleY) {
     if (!this.currentAnimation) {
         return; //Don't update if there's no animation playing
     }
-
     if (angle == undefined) angle = 0;
     if (scaleX == undefined) scaleX = 1;
     if (scaleY == undefined) scaleY = 1;
@@ -166,6 +169,7 @@ Animator.prototype._animationUpdate = function(dt) {
                 this.playOnce = false;  //Next animation should play continuously.
                 if(!this.playOnceNextAnimation === null) {
                     this.currentAnimation = null;   //Play no animation
+                    this.isPlaying = false;
                 } else {
                     this.playAnimation(this.playOnceNextAnimation)  //Play next animation after
                 }
@@ -187,7 +191,6 @@ Animator.prototype._animationUpdate = function(dt) {
 Animator.prototype._render = function(frameToDraw, cx, cy, angle, scaleX, scaleY) {
     var hw = frameToDraw.width / 2;
     var hh = frameToDraw.height / 2;
-
     this.ctx.save();
     this.ctx.translate(cx, cy);
     this.ctx.rotate(angle);

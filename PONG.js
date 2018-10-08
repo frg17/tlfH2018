@@ -91,25 +91,8 @@ function renderSimulation(ctx) {
 
     g_ball.render(ctx);
     
+    g_wall.render();
     g_paddle1.render(ctx);
-}
-
-
-/**
- * Starts all persistent audio.
- */
-function initialiseAudio() {
-    g_background.initAudio();
-}
-
-
-/**
- * Has all objects (using animators) load their animators.
- * @param {list} animations List of all animations
- */
-function initialiseAnimations(animations) {
-    g_background.initAnimator(animations);
-    g_paddle1.initAnimator(animations);
 }
 
 
@@ -119,22 +102,20 @@ function initialiseAnimations(animations) {
  *      START UP!
  */
 
-//When audio has loaded
-GameAudio.onLoad = () => {
-    //Load Animations
-    SpriteSheetRenderer.loadAnimations((animations) => {
-        initialiseAudio();
-        initialiseAnimations(animations); //Now objects can load their animators.
-        //Start game
-        g_main.init();
-    });
+function startLoadingGame() {
+    //I start loading Audio Assets
+    //Then I load animation assets
+    //Then I start game
+    GameAudio.onLoad = () => {
+        //Load Animations
+        SpriteSheetRenderer.loadAnimations((animations) => {
+            //Start game
+            g_main.init(animations);
+        });
+    }
+
+    GameAudio.loadAudio();
 }
 
-console.log(GameAudio.onLoad);
+startLoadingGame();
 
-//Start loading audio
-GameAudio.loadAudio();
-
-//I start loading Audio Assets
-//Then I load animation assets
-//Then I start game

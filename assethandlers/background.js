@@ -3,6 +3,11 @@ const g_borderWidth = 10;
 const g_background = (function() {
     let an;
 
+    function init(animations) {
+        initAudio();
+        initAnimator(animations);
+    }
+
     /**
      * Initialises background.
      */
@@ -30,5 +35,5 @@ const g_background = (function() {
         an.update(dt, 400, 300);
     }
 
-    return { initAnimator, initAudio, render };
+    return { init, render };
 })();

@@ -57,9 +57,13 @@ const GameAudio = (function() {
     /**
      * plays a clip once.
      * @param {str} clipName name of clip to play
+     * @param {float} volume Volume to play clip at
      */
-    function play(clipName) {
-        clips[clipName].cloneNode(true).play();
+    function play(clipName, volume = 1) {
+        const clip = clips[clipName].cloneNode(true);
+        clip.volume = volume;
+        clip.play();
+        //clips[clipName].cloneNode(true).play();
     }
 
     /**
@@ -86,5 +90,6 @@ const GameAudio = (function() {
 GameAudio.addClip("ballhit", "https://res.cloudinary.com/frozenscloud/video/upload/v1538863102/ballhit.wav");
 GameAudio.addClip("paddlehit", "https://res.cloudinary.com/frozenscloud/video/upload/v1538864186/paddlehit.wav");
 GameAudio.addClip("ambientcrickets", "https://res.cloudinary.com/frozenscloud/video/upload/v1538864445/crickets.mp3");
+GameAudio.addClip("glassbreak", "https://res.cloudinary.com/frozenscloud/video/upload/v1539034323/glassbreak.flac");
 
 

@@ -106,12 +106,16 @@ g_main._debugRender = function (ctx) {
     ctx.fillText('FrameSync ON', 50, y+40);
 };
 
-g_main.init = function () {
+g_main.init = function (animations) {
     
     // Grabbing focus is good, but it sometimes screws up jsfiddle,
     // so it's a risky option during "development"
     //
     //window.focus(true);
+
+    g_background.init(animations);
+    g_wall.init(g_ctx, animations);
+    g_paddle1.init(animations);
 
     this._requestNextIteration();
 };
