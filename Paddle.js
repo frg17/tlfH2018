@@ -83,3 +83,16 @@ Paddle.prototype.initAnimator = function(animations) {
 Paddle.prototype.init = function(animations) {
     this.initAnimator(animations);
 }
+
+
+var KEY_A = 'A'.charCodeAt(0);
+var KEY_D = 'D'.charCodeAt(0);
+
+var g_paddle1 = new Paddle({
+    cx : 400,
+    cy : 550,
+    
+    GO_LEFT  : KEY_A,
+    GO_RIGHT : KEY_D,
+
+});

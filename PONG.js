@@ -39,7 +39,8 @@ var g_paddle1 = new Paddle({
     cy : 550,
     
     GO_LEFT  : KEY_A,
-    GO_RIGHT : KEY_D
+    GO_RIGHT : KEY_D,
+
 });
 
 // =============

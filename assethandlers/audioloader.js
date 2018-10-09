@@ -15,6 +15,7 @@
 const GameAudio = (function() {
     const clips = [];
     let jobCount = 0;
+    let jobsLeft = 0;
     let onLoad = null;  // Callback function when all audio is loaded.
     
     /**
@@ -25,10 +26,15 @@ const GameAudio = (function() {
     function addClip(clipName, clipSrc) {
         const clip = new Audio();
         jobCount += 1;
+        jobsLeft += 1;
 
         clip.oncanplaythrough = () => {
-            jobCount -= 1;
-            if (jobCount === 0) {
+            jobsLeft -= 1;
+
+            const state = 1 - (jobsLeft / jobCount);
+            loadingScreen(state * 50);  //Max 50%
+
+            if (jobsLeft === 0) {
                 GameAudio.onLoad();
             }
         }
@@ -90,6 +96,7 @@ const GameAudio = (function() {
 GameAudio.addClip("ballhit", "https://res.cloudinary.com/frozenscloud/video/upload/v1538863102/ballhit.wav");
 GameAudio.addClip("paddlehit", "https://res.cloudinary.com/frozenscloud/video/upload/v1538864186/paddlehit.wav");
 GameAudio.addClip("ambientcrickets", "https://res.cloudinary.com/frozenscloud/video/upload/v1538864445/crickets.mp3");
+GameAudio.addClip("backgroundsong", "https://res.cloudinary.com/frozenscloud/video/upload/v1539092156/cottages.mp3");
 GameAudio.addClip("glassbreak", "https://res.cloudinary.com/frozenscloud/video/upload/v1539034323/glassbreak.flac");
 GameAudio.addClip("glasshit", "https://res.cloudinary.com/frozenscloud/video/upload/v1539034952/hitglass.wav");
 

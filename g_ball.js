@@ -5,19 +5,29 @@
 // BALL STUFF
 
 var g_ball = {
-    cx: 50,
-    cy: 400,
+    cx: g_paddle1.cx,
+    cy: g_paddle1.cy - g_paddle1.halfHeight - this.radius,
     radius: 10,
 
-    xVel: 4,
-    yVel: 7,
+    xVel: 0,
+    yVel: 0,
 
     trail: [],
 
-    rads: [6, 4, 3, 2]
+    rads: [6, 4, 3, 2],  //radii of trail
+
+    launched: false,
 };
 
 g_ball.update = function (du) {
+    if (!this.launched) {
+        //If game hasn't started.
+        this.cx = g_paddle1.cx;
+        this.cy = g_paddle1.cy - g_paddle1.halfHeight - this.radius;
+        this.launch();
+        return;
+    }
+
     // Remember my previous position
     var prevX = this.cx;
     var prevY = this.cy;
@@ -75,8 +85,9 @@ g_ball.update = function (du) {
 };
 
 g_ball.reset = function () {
-    this.cx = 50;
-    this.cy = 200;
+    this.launched = false;
+    this.cx = g_paddle1.cx;
+    this.cy = g_paddle1.cy + g_paddle1.halfHeight + this.radius;
     this.xVel = 6;
     this.yVel = 7;
 };
@@ -96,6 +107,23 @@ g_ball.render = function (ctx) {
 
     ctx.restore();
 };
+
+g_ball.LAUNCH_KEY = 32; //Key code for space
+
+g_ball.launch = function() {
+    if(eatKey(this.LAUNCH_KEY)) {
+        this.launched = true;
+        this.yVel = -6;
+        if(g_keys[g_paddle1.GO_LEFT]) {
+            this.xVel = -5;
+        } else if (g_keys[g_paddle1.GO_RIGHT]) {
+            this.xVel = +5;
+        } else {
+            const r = Math.floor(Math.random() * 2);
+            this.xVel = r === 0 ? -5 : 5;
+        }
+    }
+}
 
 /**
  * Determines velocity change according to collision point

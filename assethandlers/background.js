@@ -22,6 +22,7 @@ const g_background = (function() {
      * Initialises background audio
      */
     function initAudio() {
+        GameAudio.playLoop("backgroundsong");
         GameAudio.setVolume("ambientcrickets", 0.05);
         GameAudio.playLoop("ambientcrickets");
     }

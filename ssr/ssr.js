@@ -1,3 +1,6 @@
+//I've added additional code JUST for this breakout project. 
+//Those lines are marked with: //EXTENDED FUNCTIONALITY FOR BREAKOUT PROJECT
+
 
 
         //TODO VALIDATE PUBLIC PARAMETERS
@@ -29,6 +32,8 @@ const SpriteSheetRenderer = (function() {
     const jobs = {};        //List of jobs
     const jobQueue = [];    //queue for jobs
     let jobsRun = false;    //Check if already called loadAnimations()
+    
+    let jobCount = 0; //EXTENDED FUNCTIONALITY FOR BREAKOUT PROJECT
 
 
     /**
@@ -70,6 +75,7 @@ const SpriteSheetRenderer = (function() {
         jobsRun = true;
         const animations = {};
         animations._loadCount = jobQueue.length;
+        jobCount = animations._loadCount; //EXTENDED FUNCTIONALITY FOR BREAKOUT PROJECT
         for(var i = 0; i < jobQueue.length; i++) {
             const animationName = jobQueue[i];
             const job = jobs[animationName];
@@ -83,6 +89,9 @@ const SpriteSheetRenderer = (function() {
                     animations[animationName] = result;
 
                     animations._loadCount--;
+                    const state = 1- (animations._loadCount / jobCount);  //EXTENDED FUNCTIONALITY FOR BREAKOUT PROJECT
+                        //Loading screen is 50% (audio is done) + x% (depending how many animations left to load)
+                    loadingScreen(state * 50 + 50); //EXTENDED FUNCTIONALITY FOR BREAKOUT PROJECT
                     if(animations._loadCount == 0) {
                         callback(animations);
                     }
