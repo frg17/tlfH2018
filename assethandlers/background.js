@@ -1,3 +1,8 @@
+/*
+ * Script for handling background of game. Includes
+ * background animation, and background audio.
+ */
+
 const g_borderWidth = 10;
 
 const g_background = (function() {

@@ -1,4 +1,10 @@
 /*
+    Handles the loading and playing of game audio.
+/*
+ *  Handler for loading and playing audio for game. 
+ */
+
+ /*
 
     Notkun:
 

@@ -68,7 +68,7 @@ const SpriteSheetRenderer = (function() {
      * Functions starts loading and creating all animations added to job queue.
      * When all animations have been created, callback function is called returning
      * an object holding all animations with original animationName.
-     * @param {func} callback   callback function returning object.
+     * @param {func} callback   callback function that gets animations as a parameter.
      */
     function loadAnimations(callback) {                                         ///<---------------------PUBLIC-------------------------------------->
         if(jobsRun) return console.log("Animations already processed");

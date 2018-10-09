@@ -1,3 +1,8 @@
+/*
+ *  This script is only for defining animation assets
+ *  for the SpriteSheetRenderer to load at a later time. 
+ */
+
 SpriteSheetRenderer.addSpriteSheetAnimation(
     "background",
     "https://res.cloudinary.com/frozenscloud/image/upload/v1538845018/background_spritesheet.png",
