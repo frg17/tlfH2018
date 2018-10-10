@@ -128,9 +128,11 @@ const g_wall = (function() {
      * @param {object} circle { x, y, r}
      */
     function lookForCollisionBrick(circle) {
-        let lastCollision = null;
-        for(let row in bricks) {
-            for(let col in bricks) {
+        const { x, y } = getRelativeArrayPosition(circle); //Get relative wall of ball.
+        let lastCollision = null; //Might be multiple collisions.
+        for(let row = y - 1; row < y + 1; row++) {
+            if(!bricks[row]) continue;
+            for(let col = x - 1; col < x + 1; col++) {
                 if(!bricks[row][col]) continue;  //Skip if brick is broken.
                 if(checkIfBrickHit(circle, row, col)) {
                     lastCollision = { row, col };
@@ -140,6 +142,16 @@ const g_wall = (function() {
         }
 
         return lastCollision;
+    }
+
+    /**
+     * Computes coordinates of a circle relative to the wall.
+     * @param {Circle} circle { x, y, r }
+     */
+    function getRelativeArrayPosition(circle) {
+        const x = Math.floor((circle.x - wallOffsetX) / brickWidth);
+        const y = Math.floor((circle.y - wallOffsetY) / brickHeight);
+        return { x, y};
     }
 
     /**

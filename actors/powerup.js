@@ -73,16 +73,19 @@ const g_powerups = (function() {
      * @param {number} du 
      */
     function update(du) {
-        for(let p in availablePowerups) {
+        for(let p = 0; p < availablePowerups.length;) {
             //Exists?
-            if(availablePowerups[p]) {
-                //Should be destroyed?
-                if(availablePowerups[p].update(du)) {
-                    //Check if collected
-                    if (availablePowerups[p].checkIfCollected()) {
-                        availablePowerups[p] = undefined;
-                    }
+            //If false, should be destroyed
+            if(availablePowerups[p].update(du)) {
+                //Check if collected
+                if (availablePowerups[p].checkIfCollected()) {
+                    availablePowerups.splice(p, 1);
+                } else {
+                    p++;
                 }
+            } else {
+                //Destroy
+                availablePowerups.splice(p, 1);
             }
         }
     }
