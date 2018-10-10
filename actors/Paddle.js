@@ -5,6 +5,9 @@ function Paddle(descr) {
     }
     this.leftBoundary = 0 + this.halfWidth + g_borderWidth;
     this.rightBoundary = g_canvas.width - this.halfWidth - g_borderWidth;
+    this.missileLauncher = null; //Missile launcher belonging to paddle
+
+    this.KEY_MISSILE_FIRE = 32;
 }
 
 // Add these properties to the prototype, where they will server as
@@ -15,6 +18,7 @@ Paddle.prototype.halfHeight = 10;
 
 
 Paddle.prototype.update = function (du) {
+    //Check if paddle should move
     if (g_keys[this.GO_LEFT]) {
         this.cx -= 10 * du;
         this.cx = Math.max(this.cx, this.leftBoundary);
@@ -22,17 +26,29 @@ Paddle.prototype.update = function (du) {
         this.cx += 10 * du;
         this.cx = Math.min(this.cx, this.rightBoundary);
     }
+    //Check if missile should be fired
+    if(eatKey(this.KEY_MISSILE_FIRE)) this.missileLauncher.fire();
+    //update missileLauncher
+    this.missileLauncher.update(du);
 };
 
 Paddle.prototype.render = function (ctx) {
     // (cx, cy) is the centre; must offset it for drawing
     const dt = g_main._frameTimeDelta_ms;
+    this.missileLauncher.render(ctx);
     this.animator.update(
         dt,
         this.cx, 
         this.cy
     );
 };
+
+/**
+ * Loads the paddles missile launcher.
+ */
+Paddle.prototype.loadMissileLauncher = function() {
+    this.missileLauncher.load();
+}
 
 Paddle.prototype.collidesWith = function (prevX, prevY, 
                                           nextX, nextY, 
@@ -46,6 +62,7 @@ Paddle.prototype.collidesWith = function (prevX, prevY,
         h: this.halfHeight * 2,
     }
 
+    //See if ball collides
     if (RectCircleColliding(circle, rect)) {
         this.isHit();
 
@@ -54,6 +71,7 @@ Paddle.prototype.collidesWith = function (prevX, prevY,
             y: prevY,
             r
         };
+
         const collisionPoint = findCircleCollisionPointWithRectangle(
             circlePrev,
             rect
@@ -85,6 +103,8 @@ Paddle.prototype.init = function(animations) {
 }
 
 
+
+
 var KEY_A = 'A'.charCodeAt(0);
 var KEY_D = 'D'.charCodeAt(0);
 
@@ -96,3 +116,5 @@ var g_paddle1 = new Paddle({
     GO_RIGHT : KEY_D,
 
 });
+
+g_paddle1.missileLauncher = new MissileLauncher(g_paddle1);

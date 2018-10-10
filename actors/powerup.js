@@ -1,7 +1,7 @@
 function Powerup(cx, cy) {
     this.cx = cx;
     this.cy = cy;
-    this.yVel = 10;
+    this.yVel = 6;
     
     this.radius = 10;
 }
@@ -54,7 +54,7 @@ Powerup.prototype.checkIfCollected = function() {
     Handles actions regarding powerups in game
 */
 const g_powerups = (function() {
-    const chance = 5;   //Chance of creating powerup (1 in x)
+    const chance = 3;   //Chance of creating powerup (1 in x)
     const availablePowerups = [];   //Currently available powerups
 
     /**
@@ -79,6 +79,8 @@ const g_powerups = (function() {
             if(availablePowerups[p].update(du)) {
                 //Check if collected
                 if (availablePowerups[p].checkIfCollected()) {
+                    //Add ammo to paddles missile launcher
+                    g_paddle1.loadMissileLauncher();
                     availablePowerups.splice(p, 1);
                 } else {
                     p++;
