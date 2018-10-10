@@ -95,7 +95,7 @@ const g_powerups = (function() {
      */
     function render(ctx) {
         for(let p in availablePowerups) {
-            if(availablePowerups[p]) availablePowerups[p].render(ctx);
+            availablePowerups[p].render(ctx);
         }
     }
 
