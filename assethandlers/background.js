@@ -8,18 +8,18 @@ const g_borderWidth = 10;
 const g_background = (function() {
     let an;
 
-    function init(animations) {
+    function init() {
         initAudio();
-        initAnimator(animations);
+        initAnimator();
     }
 
     /**
      * Initialises background.
      */
-    function initAnimator(animations) {
+    function initAnimator() {
         const ctx = document.getElementById("myCanvas").getContext("2d");
         an = new Animator(ctx);
-        an.addAnimation("background", animations["background"]);
+        an.addAnimation("background", g_animations["background"]);
         an.playAnimation("background");
     }
 

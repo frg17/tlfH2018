@@ -91,15 +91,15 @@ Paddle.prototype.isHit = function() {
 }
 
 
-Paddle.prototype.initAnimator = function(animations) {
+Paddle.prototype.initAnimator = function() {
     this.animator = new Animator(g_ctx);
-    this.animator.addAnimation("paddle", animations["paddle"]);
-    this.animator.addAnimation("paddlehit", animations["paddlehit"]);
+    this.animator.addAnimation("paddle", g_animations["paddle"]);
+    this.animator.addAnimation("paddlehit", g_animations["paddlehit"]);
     this.animator.playAnimation("paddle");
 }
 
-Paddle.prototype.init = function(animations) {
-    this.initAnimator(animations);
+Paddle.prototype.init = function() {
+    this.initAnimator();
 }
 
 

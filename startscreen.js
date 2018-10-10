@@ -1,6 +1,6 @@
-function startScreen(ctx, animations) {
+function startScreen(ctx) {
     ctx.save();
-    const image = animations["background"].frames[0];
+    const image = g_animations["background"].frames[0];
     ctx.drawImage(image, 0, 0);
     ctx.fillStyle = "#32a25d";
     ctx.fillRect(g_canvas.width/2 - 50, g_canvas.height/2 - 20, 100, 40);
@@ -20,7 +20,7 @@ function startScreen(ctx, animations) {
         if(x >= boxLeft && x <= boxLeft + 100 &&
             y >= boxTop && y <= boxTop + 40) 
         {
-            g_main.init(animations);
+            g_main.init();
             document.removeEventListener("mousedown", playGame);
         }
     }

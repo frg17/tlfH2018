@@ -4,6 +4,9 @@ function Powerup(cx, cy) {
     this.yVel = 6;
     
     this.radius = 10;
+    this.animator = new Animator(g_ctx);
+    this.animator.addAnimation("missilepowerup", g_animations["missilepu"]);
+    this.animator.playAnimation("missilepowerup");
 }
 
 /**
@@ -23,9 +26,8 @@ Powerup.prototype.update = function(du) {
  * Renders powerup on screen.
  */
 Powerup.prototype.render = function(ctx) {
-    //const dt = g_main._frameTimeDelta_ms;
-    ctx.fillStyle = "black";
-    fillCircle(ctx, this.cx, this.cy, this.radius);
+    const dt = g_main._frameTimeDelta_ms;
+    this.animator.update(dt, this.cx, this.cy);
 }
 
 /**

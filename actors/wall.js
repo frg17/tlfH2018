@@ -27,13 +27,13 @@ const g_wall = (function() {
      * Initiates the wall.
      * @param {Canvas2DContext} context context to draw upon.
      */
-    function init(context, animations) {
+    function init(context) {
         ctx = context;
         staticAnimator = new Animator(context);
-        staticAnimator.addAnimation("glassbrick", animations["glassbrick"]);
+        staticAnimator.addAnimation("glassbrick", g_animations["glassbrick"]);
         staticAnimator.playAnimation("glassbrick");
 
-        brickBreakingAnimation = animations["glassbrickbreak"];
+        brickBreakingAnimation = g_animations["glassbrickbreak"];
 
         buildWall();
     }

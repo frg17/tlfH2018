@@ -98,7 +98,7 @@ function startLoadingGame() {
     GameAudio.onLoad = () => {
         //Load Animations
         SpriteSheetRenderer.loadAnimations((animations) => {
-            //Start game
+            g_animations = animations;
             startScreen(g_ctx, animations);
         });
     }

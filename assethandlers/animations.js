@@ -2,6 +2,7 @@
  *  This script is only for defining animation assets
  *  for the SpriteSheetRenderer to load at a later time. 
  */
+let g_animations = null;
 
 SpriteSheetRenderer.addSpriteSheetAnimation(
     "background",
@@ -31,5 +32,11 @@ SpriteSheetRenderer.addSpriteSheetAnimation(
     "glassbrickbreak",
     "https://res.cloudinary.com/frozenscloud/image/upload/v1539032958/brickhit.png",
     103, 200, 16, 600
+);
+
+SpriteSheetRenderer.addSpriteSheetAnimation(
+    "missilepu",
+    "https://res.cloudinary.com/frozenscloud/image/upload/v1539205783/misslepu.png",
+    11, 10, 11, 300
 );
 
