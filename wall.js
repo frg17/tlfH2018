@@ -183,12 +183,29 @@ const g_wall = (function() {
         //Create broken brick and add to breaking list.
         const brokenBrick = { cx, cy, animator };
         breaking.push(brokenBrick);
+        g_powerups.rollForPowerup(cx, cy);
     }
 
+    /**
+     * Adds a row into the wall.
+     */
+    function reinforce() {
+        const newRow = [];
+        for(let i = 0; i < wallWidth; i++) {
+            newRow.push(true);
+        }
+        bricks.unshift(newRow);
+    }
+
+
+    function update(du) {
+
+    }
 
 
     return {
         init,
+        update,
         render,
         collidesWith,
     }

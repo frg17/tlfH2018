@@ -24,7 +24,6 @@ function loadingScreen(status) {
 function loadingScreenBar(status) {
     const left = g_canvas.width/2 - 100;
     const state = status;
-    console.log(state);
     g_ctx.fillStyle = "green";
     g_ctx.fillRect(
         left, 450, state, 50

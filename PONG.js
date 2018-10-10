@@ -17,8 +17,6 @@ The "MAINLOOP" code, inside g_main, is much simplified as a result.
 
 /* jshint browser: true, devel: true, globalstrict: true */
 
-var g_canvas = document.getElementById("myCanvas");
-var g_ctx = g_canvas.getContext("2d");
 
 /*
 0        1         2         3         4         5         6         7         8         9
@@ -31,17 +29,7 @@ var g_ctx = g_canvas.getContext("2d");
 
 // PADDLE 1
 
-var KEY_A = 'A'.charCodeAt(0);
-var KEY_D = 'D'.charCodeAt(0);
 
-var g_paddle1 = new Paddle({
-    cx : 400,
-    cy : 550,
-    
-    GO_LEFT  : KEY_A,
-    GO_RIGHT : KEY_D,
-
-});
 
 // =============
 // GATHER INPUTS
@@ -69,7 +57,7 @@ function gatherInputs() {
 function updateSimulation(du) {
     
     g_ball.update(du);
-    
+    g_powerups.update(du);
     g_paddle1.update(du);
 }
 
@@ -91,7 +79,7 @@ function renderSimulation(ctx) {
     g_background.render();
 
     g_ball.render(ctx);
-    
+    g_powerups.render(ctx);
     g_wall.render();
     g_paddle1.render(ctx);
 }
