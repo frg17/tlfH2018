@@ -1,14 +1,21 @@
 const g_wall = (function() {
     const bricks = [];  //Array holds bricks
 
-    const wallStartHeight = 12;  // Start rows in wall.
-    const wallWidth = 12;   //10 bricks wide.
+    const wallStartHeight = 8;  // Start rows in wall.
+    const rowLength = 10;   //10 bricks wide.
 
     const wallOffsetX = 40; //Left offset off wall
     const wallOffsetY = 60; //Right offset off wall
 
+    const marginX = 6; //space between bricks
+    const marginY = 5; //space between bricks
+
     const brickWidth = 60;  //Width of individual bricks
     const brickHeight = 15; //Height of individual bricks
+
+    const brickContainerWidth = 72; //brick width with margins to seperate 
+    const brickContainerHeight = 25; //brick height with margins to seperate
+
 
     let staticAnimator = null;
     let brickBreakingAnimation = null;
@@ -37,7 +44,7 @@ const g_wall = (function() {
     function buildWall() {
         for(let row = 0; row < wallStartHeight; row++) {
             bricks[row] = [];
-            for(let col = 0; col < wallWidth; col++) {
+            for(let col = 0; col < rowLength; col++) {
                 bricks[row].push(true);
             }
         }
@@ -74,8 +81,8 @@ const g_wall = (function() {
      */
     function renderBrick(row, col) {
         if(bricks[row][col]) {
-            const x = col * brickWidth + wallOffsetX + brickWidth/2;
-            const y = row * brickHeight + wallOffsetY + brickHeight/2;
+            const x = col * brickContainerWidth + wallOffsetX + brickContainerWidth/2;
+            const y = row * brickContainerHeight + wallOffsetY + brickContainerHeight/2;
 
             staticAnimator.update(0, x, y);
         }
@@ -93,8 +100,8 @@ const g_wall = (function() {
         // Objectify circle and square for collision check.
         const circle = { x: nextX, y: nextY, r: r};
         const rect = { x: wallOffsetX, y: wallOffsetY,
-                         w: wallWidth * brickWidth,
-                         h: bricks.length * brickHeight
+                         w: rowLength * brickContainerWidth,
+                         h: bricks.length * brickContainerHeight
                     }
 
         //Check if circle in wall
@@ -104,8 +111,8 @@ const g_wall = (function() {
             if (collision) {
                 //Find collision point of circle.
                 const brick = {
-                    x: wallOffsetX + brickWidth * collision.col,
-                    y: wallOffsetY + brickHeight * collision.row,
+                    x: wallOffsetX + brickContainerWidth * collision.col + marginX,
+                    y: wallOffsetY + brickContainerHeight * collision.row + marginY,
                     w: brickWidth,
                     h: brickHeight
                 }
@@ -149,8 +156,8 @@ const g_wall = (function() {
      * @param {Circle} circle { x, y, r }
      */
     function getRelativeArrayPosition(circle) {
-        const x = Math.floor((circle.x - wallOffsetX) / brickWidth);
-        const y = Math.floor((circle.y - wallOffsetY) / brickHeight);
+        const x = Math.floor((circle.x - wallOffsetX) / brickContainerWidth);
+        const y = Math.floor((circle.y - wallOffsetY) / brickContainerHeight);
         return { x, y};
     }
 
@@ -164,8 +171,8 @@ const g_wall = (function() {
      */
     function checkIfBrickHit(circle, row, col) {
         let collision = null;
-        const x = wallOffsetX + col * brickWidth;
-        const y = wallOffsetY + row * brickHeight;
+        const x = wallOffsetX + col * brickContainerWidth + marginX;
+        const y = wallOffsetY + row * brickContainerHeight + marginY;
         const rect = { x, y, w: brickWidth, h: brickHeight }
 
         collision = RectCircleColliding(circle, rect);
@@ -183,8 +190,8 @@ const g_wall = (function() {
     function breakBrick(row, col) {
         GameAudio.play("glassbreak");
         //Find center coordinates of brick
-        const cx = wallOffsetX + col * brickWidth + brickWidth/2;
-        const cy = wallOffsetY + row * brickHeight + brickHeight/2;
+        const cx = wallOffsetX + col * brickContainerWidth + brickContainerWidth/2;
+        const cy = wallOffsetY + row * brickContainerHeight + brickContainerHeight/2;
 
         bricks[row][col] = false; //disable brick
 
@@ -203,7 +210,7 @@ const g_wall = (function() {
      */
     function reinforce() {
         const newRow = [];
-        for(let i = 0; i < wallWidth; i++) {
+        for(let i = 0; i < rowLength; i++) {
             newRow.push(true);
         }
         bricks.unshift(newRow);

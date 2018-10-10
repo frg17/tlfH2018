@@ -63,7 +63,7 @@ const GameAudio = (function() {
      */
     function playLoop(clipName) {
         clips[clipName].loop = true;
-        clips[clipName].play();
+        if(!clips[clipName].muted) clips[clipName].play();
     }
 
     /**

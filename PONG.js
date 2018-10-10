@@ -99,7 +99,7 @@ function startLoadingGame() {
         //Load Animations
         SpriteSheetRenderer.loadAnimations((animations) => {
             //Start game
-            g_main.init(animations);
+            startScreen(g_ctx, animations);
         });
     }
 
