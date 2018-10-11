@@ -36,7 +36,24 @@ SpriteSheetRenderer.addSpriteSheetAnimation(
 
 SpriteSheetRenderer.addSpriteSheetAnimation(
     "missilepu",
-    "https://res.cloudinary.com/frozenscloud/image/upload/v1539205783/misslepu.png",
-    11, 10, 11, 300
+    "https://res.cloudinary.com/frozenscloud/image/upload/v1539207510/misslepu.png",
+    22, 20, 11, 300
 );
 
+SpriteSheetRenderer.addSpriteSheetAnimation(
+    "missilefired",
+    "https://res.cloudinary.com/frozenscloud/image/upload/v1539208357/missilefired.png  ",
+    22, 30, 11, 300
+);
+
+SpriteSheetRenderer.addSpriteSheetAnimation(
+    "missilelauncher",
+    "https://res.cloudinary.com/frozenscloud/image/upload/v1539209359/missilelauncher.png",
+    20, 30, 1, 0
+);
+
+SpriteSheetRenderer.addSpriteSheetAnimation(
+    "explosion",
+    "https://res.cloudinary.com/frozenscloud/image/upload/v1539210617/explosion.png",
+    20, 20, 11, 300
+);

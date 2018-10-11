@@ -59,9 +59,10 @@ g_main._iterCore = function (dt) {
 
 g_main._isGameOver = false;
 
-g_main.gameOver = function () {
+g_main.gameOver = function (victory = false) {
     this._isGameOver = true;
     console.log("gameOver: quitting...");
+    newGame(victory);
 };
 
 // Simple voluntary quit mechanism
@@ -107,7 +108,7 @@ g_main._debugRender = function (ctx) {
 };
 
 g_main.init = function (animations) {
-    
+    loading_finished = true;
     // Grabbing focus is good, but it sometimes screws up jsfiddle,
     // so it's a risky option during "development"
     //

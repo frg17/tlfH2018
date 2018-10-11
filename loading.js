@@ -1,11 +1,14 @@
-var g_canvas = document.getElementById("myCanvas");
-var g_ctx = g_canvas.getContext("2d");
+const g_canvas = document.getElementById("myCanvas");
+const g_ctx = g_canvas.getContext("2d");
+let loading_finished = false;
+
 
 /**
  * Renders a loading screen while waiting for assets to load
  * @param {number} status percentage of assets loaded. 
  */
 function loadingScreen(status) {
+    if(loading_finished) return;
     g_ctx.save();
     g_ctx.fillStyle = "black";
     g_ctx.fillRect(0, 0, g_canvas.width, g_canvas.height);

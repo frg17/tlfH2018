@@ -1,9 +1,9 @@
 function Powerup(cx, cy) {
     this.cx = cx;
     this.cy = cy;
-    this.yVel = 6;
-    
+    this.yVel = 3;
     this.radius = 10;
+
     this.animator = new Animator(g_ctx);
     this.animator.addAnimation("missilepowerup", g_animations["missilepu"]);
     this.animator.playAnimation("missilepowerup");
@@ -52,12 +52,16 @@ Powerup.prototype.checkIfCollected = function() {
     }
 }
 
+
+
+
+
 /*
     Handles actions regarding powerups in game
 */
 const g_powerups = (function() {
     const chance = 3;   //Chance of creating powerup (1 in x)
-    const availablePowerups = [];   //Currently available powerups
+    let availablePowerups = [];   //Currently available powerups
 
     /**
      * Rolls on a chance to create a new powerup
@@ -103,11 +107,19 @@ const g_powerups = (function() {
         }
     }
 
+    /**
+     * Resets powerups
+     */
+    function reset() {
+        availablePowerups = [];
+    }
+
 
     return {
         rollForPowerup,
         update,
-        render
+        render,
+        reset,
     }
 })();
 

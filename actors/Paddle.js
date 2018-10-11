@@ -35,12 +35,12 @@ Paddle.prototype.update = function (du) {
 Paddle.prototype.render = function (ctx) {
     // (cx, cy) is the centre; must offset it for drawing
     const dt = g_main._frameTimeDelta_ms;
-    this.missileLauncher.render(ctx);
     this.animator.update(
         dt,
         this.cx, 
         this.cy
-    );
+        );
+        this.missileLauncher.render(ctx);
 };
 
 /**
@@ -99,6 +99,7 @@ Paddle.prototype.initAnimator = function() {
 }
 
 Paddle.prototype.init = function() {
+    g_paddle1.missileLauncher = new MissileLauncher(g_paddle1);
     this.initAnimator();
 }
 
@@ -117,4 +118,3 @@ var g_paddle1 = new Paddle({
 
 });
 
-g_paddle1.missileLauncher = new MissileLauncher(g_paddle1);

@@ -41,27 +41,27 @@ g_ball.update = function (du) {
     if (paddleCollision)
     {
         this.calculateVelocityChange(paddleCollision);
-        if(nextX < (g_paddle1.cx - g_paddle1.halfWidth/2)) {
-            this.xVel = -Math.abs(this.xVel);
-        } else if(nextX > (g_paddle1.cx + g_paddle1.halfWidth/2)) {
-            this.xVel = Math.abs(this.xVel);
-        }
     }
 
     // Check brick collisions
     const wallCollision = g_wall.collidesWith(nextX, nextY, prevX, prevY, this.radius);
     if(wallCollision) {
         this.calculateVelocityChange(wallCollision);
+        this.xVel += this.xVel > 0 ? + 0.05 : -0.05;
+        this.yVel += this.yVel > 0 ? + 0.05 : -0.05;
         GameAudio.play("glasshit");
     }
 
     var margin = 8; //To try and make ball edge hits more in line with the background border.
 
-    // Bounce off top and bottom edges
-    if (nextY < 0 + g_borderWidth + this.radius - margin||                   // top edge
-        nextY > g_canvas.height - g_borderWidth - this.radius + margin) {    // bottom edge
+    // Bounce off top
+    if (nextY < 0 + g_borderWidth + this.radius - margin) {    // top
         this.yVel *= -1;
         GameAudio.play("ballhit", 0.5);
+    } else if(nextY > g_canvas.height - g_borderWidth - this.radius + margin) {
+        this.xVel = 0;
+        this.yVel = 0;
+        g_main.gameOver();
     }
 
     //Bounce of left and right edges
@@ -88,8 +88,7 @@ g_ball.reset = function () {
     this.launched = false;
     this.cx = g_paddle1.cx;
     this.cy = g_paddle1.cy + g_paddle1.halfHeight + this.radius;
-    this.xVel = 6;
-    this.yVel = 7;
+    this.trail = [];
 };
 
 g_ball.render = function (ctx) {
@@ -110,17 +109,20 @@ g_ball.render = function (ctx) {
 
 g_ball.LAUNCH_KEY = 32; //Key code for space
 
+/**
+ * Launches ball from paddle.
+ */
 g_ball.launch = function() {
     if(eatKey(this.LAUNCH_KEY)) {
         this.launched = true;
-        this.yVel = -6;
+        this.yVel = -4;
         if(g_keys[g_paddle1.GO_LEFT]) {
             this.xVel = -5;
         } else if (g_keys[g_paddle1.GO_RIGHT]) {
             this.xVel = +5;
         } else {
-            const r = Math.floor(Math.random() * 2);
-            this.xVel = r === 0 ? -5 : 5;
+            const r = Math.random() * 2;
+            this.xVel = r < 1 ? -5 : 5;
         }
     }
 }

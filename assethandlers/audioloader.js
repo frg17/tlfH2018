@@ -105,5 +105,7 @@ GameAudio.addClip("ambientcrickets", "https://res.cloudinary.com/frozenscloud/vi
 GameAudio.addClip("backgroundsong", "https://res.cloudinary.com/frozenscloud/video/upload/v1539092156/cottages.mp3");
 GameAudio.addClip("glassbreak", "https://res.cloudinary.com/frozenscloud/video/upload/v1539034323/glassbreak.flac");
 GameAudio.addClip("glasshit", "https://res.cloudinary.com/frozenscloud/video/upload/v1539034952/hitglass.wav");
+GameAudio.addClip("missilelaunch", "https://res.cloudinary.com/frozenscloud/video/upload/v1539211718/missilefire.wav");
+GameAudio.addClip("missileexplosion", "https://res.cloudinary.com/frozenscloud/video/upload/v1539211718/shortexplosion.wav");
 
 

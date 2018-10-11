@@ -16,12 +16,12 @@ const g_wall = (function() {
     const brickContainerWidth = 72; //brick width with margins to seperate 
     const brickContainerHeight = 25; //brick height with margins to seperate
 
+    let brickCount = 0;
 
     let staticAnimator = null;
     let brickBreakingAnimation = null;
 
-    const breaking = [];  //holds bricks that are currently breaking.
-
+    let breaking = null;
 
     /**
      * Initiates the wall.
@@ -34,6 +34,8 @@ const g_wall = (function() {
         staticAnimator.playAnimation("glassbrick");
 
         brickBreakingAnimation = g_animations["glassbrickbreak"];
+        breaking = [];
+        brickCount = rowLength * wallStartHeight;
 
         buildWall();
     }
@@ -203,6 +205,21 @@ const g_wall = (function() {
         const brokenBrick = { cx, cy, animator };
         breaking.push(brokenBrick);
         g_powerups.rollForPowerup(cx, cy);
+
+        brickCount--;
+        checkIfGameOver();
+    }
+
+    /**
+     * Checks if all bricks have been broken and if so
+     * handles the victory scenario.
+     */
+    function checkIfGameOver() {
+        if(brickCount === 0) {
+            setTimeout(()=> {
+                g_main.gameOver(true); //Call game over in victory mode
+            }, 1000);  
+        }
     }
 
     /**
@@ -217,14 +234,8 @@ const g_wall = (function() {
     }
 
 
-    function update(du) {
-
-    }
-
-
     return {
         init,
-        update,
         render,
         collidesWith,
     }

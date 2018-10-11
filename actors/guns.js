@@ -7,25 +7,42 @@ function Missile(cx, cy) {
     this.cx = cx;
     this.cy = cy;
     this.radius = 15;
+    this.yVel = -8;
 
-    this.yVel = -5;
+    this.isLive = true;
+
+    //Setting up animations
+    this.animator = new Animator(g_ctx);
+    this.animator.addAnimation("missilefired", g_animations["missilefired"]);
+    this.animator.addAnimation("explosion", g_animations["explosion"]);
+    this.animator.playAnimation("missilefired");
 }
 
 /**
  * Updates missile position
  */
 Missile.prototype.update = function(du) {
-    const prevY = this.cy;
-    const nextY = this.cy + this.yVel * du;
+    const prevY = this.cy; //save last
+    const nextY = this.cy + this.yVel * du; //calculate next
 
-    if(g_wall.collidesWith(this.cx, nextY, this.cx, prevY, this.radius)) {
-        return false;
+    //Check if brick has been hit.
+    if(this.isLive && 
+        g_wall.collidesWith(this.cx, nextY, this.cx, prevY, this.radius)) 
+    {
+        this.yVel = -1;
+        this.isLive = false; //Detonated
+        this.animator.playAnimationOnce("explosion");
+        GameAudio.play("missileexplosion");
     }
 
+    //Update location
     this.cy = nextY;
 
+    //Check if missile is out of bounds.
     if (this.cy < 0) {
         return false;  //Should keep updating
+    } else if (!this.animator.isPlaying) {
+        return false;
     }
     return true;
 
@@ -35,8 +52,8 @@ Missile.prototype.update = function(du) {
  * Renders missile
  */
 Missile.prototype.render = function(ctx) {
-    ctx.fillStyle = "yellow";
-    fillCircle(ctx, this.cx, this.cy, this.radius);
+    const dt = g_main._frameTimeDelta_ms;
+    this.animator.update(dt, this.cx, this.cy);
 }
 
 
@@ -44,11 +61,16 @@ Missile.prototype.render = function(ctx) {
  * Handles missiles fired by paddle.
  */
 function MissileLauncher(owner) {
-    this.owner = owner;
+    this.owner = owner;  //The owner of this missile launcher (f.x. paddle)
     this.cx = 0;
     this.cy = this.owner.cy;
     this.ammo = 0;  //Ammo available
     this.missiles = []; //Active missiles
+
+    this.animator = new Animator(g_ctx);
+    this.animator.addAnimation("missilelauncher", g_animations["missilelauncher"]);
+    this.animator.playAnimation("missilelauncher");
+
 }
 
 /**
@@ -69,14 +91,16 @@ MissileLauncher.prototype.update = function(du) {
  * Renders gun
  */
 MissileLauncher.prototype.render = function(ctx) {
-    ctx.save();
-    ctx.fillStyle = "red";
-    ctx.fillRect(this.cx - 5, this.cy - 20, 10, 40);
+    const dt = g_main._frameTimeDelta_ms;
     for(let m = 0; m < this.missiles.length; m++) {
         this.missiles[m].render(ctx);
     }
-
-    ctx.restore();
+    this.animator.update(dt, this.cx, this.cy);
+    
+    const missileImg = g_animations["missilepu"].frames[0];
+    for(let i = 0; i < this.ammo; i++) {
+        ctx.drawImage(missileImg, 15 + i * 25, 15);
+    }
 }
 
 /**
@@ -86,6 +110,7 @@ MissileLauncher.prototype.fire = function() {
     if(this.ammo > 0) {
         this.missiles.push(new Missile(this.cx, this.cy));
         this.ammo--;
+        GameAudio.play("missilelaunch");
     }
 }
 
